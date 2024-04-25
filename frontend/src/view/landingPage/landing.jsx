@@ -1,5 +1,11 @@
+import Navbar from "../../components/navbar/navbar";
+
 const LandingPage = () => {
-  return <div>랜딩페이지 입니다!</div>;
+  return (
+    <div>
+      <Navbar />
+    </div>
+  );
 };
 
 export default LandingPage;
