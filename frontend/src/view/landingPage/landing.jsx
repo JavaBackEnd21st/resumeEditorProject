@@ -1,9 +1,13 @@
+import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar/navbar";
 
 const LandingPage = () => {
   return (
     <div>
-      <Navbar />
+      랜딩 페이지 입니다!
+      <Link to="/main" style={{ color: "black" }}>
+        메인으로 이동
+      </Link>
     </div>
   );
 };

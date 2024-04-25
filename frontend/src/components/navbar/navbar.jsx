@@ -10,13 +10,13 @@ const Navbar = () => {
 
         <ul className="navbar_menu">
           <li>
-            <Link to="/">자소서 첨삭</Link>
+            <Link to="/main/resume">자소서 첨삭</Link>
           </li>
           <li>
-            <Link to="/">자소서 목록</Link>
+            <Link to="/main/resumelist">자소서 목록</Link>
           </li>
           <li>
-            <Link to="/">마이페이지</Link>
+            <Link to="/main/mypage">마이페이지</Link>
           </li>
           <li>
             <Link to="/">뭐라고하지</Link>
