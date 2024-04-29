@@ -2,6 +2,7 @@ import { Button, Form, Input } from "antd";
 import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useForm } from "antd/es/form/Form";
+import React from "react";
 
 const ResumeEdit = () => {
   const [questionList, setQuestionList] = useState([]);
@@ -14,19 +15,19 @@ const ResumeEdit = () => {
 
   const handleQuestionList = ({ control, idx, questionType }) => {
     if (control == "plus") {
-      if (questionType == "question") {
-        let newQuestionList = [...questionList];
-        newQuestionList.push(0);
-        setQuestionList(newQuestionList);
-      } else if (questionType == "award") {
-        let newAwardList = [...awardList];
-        newAwardList.push(0);
-        setAwardList(newAwardList);
-      } else if (questionType == "career") {
-        let newCareerList = [...careerList];
-        newCareerList.push(0);
-        setCareerList(newCareerList);
-      }
+      // if (questionType == "question") {
+      //   let newQuestionList = [...questionList];
+      //   newQuestionList.push(0);
+      //   setQuestionList(newQuestionList);
+      // } else if (questionType == "award") {
+      //   let newAwardList = [...awardList];
+      //   newAwardList.push(0);
+      //   setAwardList(newAwardList);
+      // } else if (questionType == "career") {
+      //   let newCareerList = [...careerList];
+      //   newCareerList.push(0);
+      //   setCareerList(newCareerList);
+      // }
     } else {
       // let newQuestionList = [...questionList];
       // newQuestionList.splice(idx, 1);
