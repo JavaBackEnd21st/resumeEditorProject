@@ -1,17 +1,26 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path, { resolve } from "path";
 
 export default defineConfig(() => {
   return {
     build: {
       outDir: "build",
     },
-    plugins: [react()],
+    plugins: [
+      react({
+        jsxRuntime: "classic",
+      }),
+    ],
     server: {
       port: 3000,
     },
     esbuild: {
       jsxInject: `import React from 'react'`,
+    },
+    resolve: {
+      alias: [{ find: "@", replacement: resolve(__dirname, "./src") }],
+      extensions: [".js", ".jsx", ".ts", ".tsx"],
     },
   };
 });

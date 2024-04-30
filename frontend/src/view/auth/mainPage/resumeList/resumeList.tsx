@@ -1,5 +1,4 @@
 import { Form } from "antd";
-import React from "react";
 
 const ResumeList = () => {
   return (

@@ -2,7 +2,6 @@ import { Button, Form, Input } from "antd";
 import { PlusSquareOutlined, MinusSquareOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import { useForm } from "antd/es/form/Form";
-import React from "react";
 
 const ResumeEdit = () => {
   const [questionList, setQuestionList] = useState([]);
