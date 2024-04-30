@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResumeEditDTO {
-    private Long rNum;
+    private Long r_num;
     private String company;
     private String occupation;
     private JsonNode items;

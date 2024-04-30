@@ -22,7 +22,7 @@ import java.util.Map;
 public class ResumeEdit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rNum;
+    private Long r_num;
     private String company;
     private String occupation;
     private String items;

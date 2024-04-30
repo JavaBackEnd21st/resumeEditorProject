@@ -1,6 +1,8 @@
 package com.team2.resumeeditorproject.resume.controller;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.team2.resumeeditorproject.resume.domain.Resume;
 import com.team2.resumeeditorproject.resume.dto.ResumeDTO;
 import com.team2.resumeeditorproject.resume.service.ResumeEditService;
@@ -31,62 +33,33 @@ public class ResumeEditController {
     private ResumeService resumeService;
 
     @PostMapping("/upload")
-    public ResponseEntity<Map<String, String>> insertResumeEdit(@RequestBody ResumeEditDTO resumeEditDTO) {
+    public ResponseEntity<Map<String, String>> insertResumeEdit(@RequestBody Map<String, Object> requestBody) {
         Map<String, String> response = new HashMap<>();
         Date today = new Date();
         try{
-            ResumeEditDTO dto = resumeEditService.insertResumeEdit(resumeEditDTO);
-            response.put("response", "resumeEdit table insert success");
+            response.put("response", "resumeEdit/resume table insert success");
             response.put("time", today.toString());
             response.put("status", "Success");
 
-            Long resumeEditId = dto.getRNum(); // resumeEdit 테이블의 primary key 얻기
+            // 요청 본문에서 content 필드 추출
+            String content = (String) requestBody.get("content");
+            // content를 제외한 나머지 데이터를 ResumeEditDTO로 매핑
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            ResumeEditDTO resumeEditDTO = objectMapper.convertValue(requestBody, ResumeEditDTO.class);
+            resumeEditDTO = resumeEditService.insertResumeEdit(resumeEditDTO);
 
+            Long resumeEditId = resumeEditDTO.getR_num(); // resumeEdit 테이블의 primary key 얻기
 
-            // /result 요청 보내기
-            ResponseEntity<Map<String, String>> resultResponse = insertResume(resumeEditId);
-
-            if (resultResponse.getBody().get("status").equals("Success")) {
-                return ResponseEntity.ok(response); // 1. 상태 (성공,실패) 2. 시간 3. 메시지내용(성공, 실패이유)
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resultResponse.getBody());
-            }
-
-        }
-        catch (Exception e){
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("response", "server error");
-            errorResponse.put("time", today.toString());
-            errorResponse.put("status", "Fail");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-
-        }
-    }
-
-
-    @PostMapping("/result")
-    public ResponseEntity<Map<String, String>> insertResume(@RequestParam Long resumeEditId) {
-        Map<String, String> response = new HashMap<>();
-        Date today = new Date();
-        try{
-            // result 요청에 필요한 데이터 설정
             ResumeDTO resumeDTO = new ResumeDTO();
 
             // resume 테이블에 저장
             resumeDTO.setR_num(resumeEditId);
-
-            // resumeDTO에 필요한 데이터 설정
-            resumeDTO.setContent("GPT로 첨삭된 자소서 가져와서 넣기");
+            resumeDTO.setContent(content);
             resumeDTO.setU_num(3L);
 
-            ResumeDTO dto = resumeService.insertResume(resumeDTO);
+            resumeService.insertResume(resumeDTO);
 
-            // resultContent/{resumeId} 요청 보내기
-            getResumeContent(resumeEditId);
-
-            response.put("response", "resume table insert success");
-            response.put("time", today.toString());
-            response.put("status", "Success");
             return ResponseEntity.ok(response);
         }
         catch (Exception e){
@@ -95,9 +68,11 @@ public class ResumeEditController {
             errorResponse.put("time", today.toString());
             errorResponse.put("status", "Fail");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+
         }
     }
 
+/*
     @GetMapping("/resultContent/{resumeId}")
     public ResponseEntity<String> getResumeContent(@PathVariable("resumeId")  Long resumeId) {
         try {
@@ -110,6 +85,6 @@ public class ResumeEditController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to fetch resume content");
         }
     }
-
+*/
 
 }
