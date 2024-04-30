@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.team2.resumeeditorproject.user","com.team2.resumeeditorproject.config"})
-@EnableJpaRepositories("com.team2.resumeeditorproject.user.repository")
-@EntityScan("com.team2.resumeeditorproject.user.domain")
+@ComponentScan(basePackages = {"com.team2.resumeeditorproject.user","com.team2.resumeeditorproject.config","com.team2.resumeeditorproject.resume"})
+@EnableJpaRepositories(basePackages = {"com.team2.resumeeditorproject.user.repository", "com.team2.resumeeditorproject.resume.repository"})
+@EntityScan(basePackages = {"com.team2.resumeeditorproject.user.domain", "com.team2.resumeeditorproject.resume.domain"})
 public class ResumeEditorProjectApplication {
 
 	public static void main(String[] args) {
